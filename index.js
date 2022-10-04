@@ -23,11 +23,14 @@ const server = http.createServer(function(req,res){
     //get the http method
     const method = req.method.toLowerCase();
 
+    //get the headers as an object
+    const headers = req.headers;
+
     //send response
     res.end('Hello World\n');
 
     //log the request oath
-    console.log('Request received on path: '+ trimmedPath+ ' with this method: ' + method + ' and with these querystring paramaters: ', queryStringObject);
+    console.log('Request received with these headers; ', headers);
     
 })
 
