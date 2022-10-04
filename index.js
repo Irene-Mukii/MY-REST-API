@@ -6,6 +6,7 @@
 //dependancies
 const http = require('http');
 const url = require('url');
+const stringDecoder = require('string_decoder').StringDecoder;
 
 //server should respond to all requests with a sting 
 const server = http.createServer(function(req,res){
@@ -26,11 +27,24 @@ const server = http.createServer(function(req,res){
     //get the headers as an object
     const headers = req.headers;
 
+    //get payload (info trying to be put in server for display or reading)if any
+    const decoder = new stringDecoder('utf-8');
+    let buffer = '';
+    req.on('data',function(data){
+        buffer += decoder.write(data);
+    });
+    req.on('end', function (){
+        buffer += decoder.end();
+
     //send response
     res.end('Hello World\n');
 
     //log the request oath
-    console.log('Request received with these headers; ', headers);
+    console.log('Request received with these payload; ', buffer);
+
+    });
+
+
     
 })
 
